@@ -4,43 +4,31 @@
   "workspaces": [
     "packages/*"
   ],
-  "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
-    "@types/jest": "^26.0.22",
-    "all-contributors-cli": "^6.20.0",
-    "commitizen": "^4.2.3",
-    "cz-conventional-changelog": "^3.3.0",
-    "husky": "^6.0.0",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.5",
-    "typescript": "^4.2.4"
+  "scripts": {
+    "dev:web": "yarn workspace @oasis/web dev",
+    "dev:api": "yarn workspace @oasis/api dev",
+    "dev:api:server": "yarn workspace @oasis/api dev:server",
+    "dev:gql": "yarn workspace @oasis/client-gql dev",
+    "build": "yarn plugin import workspace-tools && yarn workspaces foreach --exclude @oasis/playwright -p run build",
+    "dev": "run-p -l \"dev:web\" \"dev:api\" \"dev:gql\"",
+    "commit": "git add . && cz && git push",
+    "deploy": "git pull origin staging && git add . && git commit -m \"chore(deploy): Merge staging -> prod\" && git checkout prod && git merge staging && git push origin prod --force && git checkout staging"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test:no-watch"
-    }
+  "devDependencies": {
+    "@types/eslint": "^7",
+    "@types/jest": "^26.0.23",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "3.3.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^26.5.5"
+  },
+  "dependencies": {
+    "typescript": "^4.2.4"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog",
       "defaultScope": "global"
     }
-  },
-  "scripts": {
-    "prepare": "husky install",
-    "commit": "cz",
-    "contrib:add": "all-contributors add",
-    "contrib:build": "all-contributors generate",
-    "dev:web": "yarn workspace @oasis/web dev",
-    "dev:api": "yarn workspace @oasis/api watch:tsc",
-    "dev:api:server": "yarn workspace @oasis/api watch",
-    "dev:gql": "yarn workspace client-gql watch",
-    "dev": "echo \"🚀 Starting development servers for all workspaces!\" && concurrently -p \" {name} \" -c bgCyan \"yarn:dev:web\" \"yarn:dev:api\" \"yarn:dev:gql\""
-  },
-  "dependencies": {
-    "apollo-server-micro": "^2.23.0",
-    "concurrently": "^6.0.2",
-    "firebase-admin": "^9.6.0"
   }
 }

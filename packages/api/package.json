@@ -1,28 +1,34 @@
 {
   "name": "@oasis/api",
   "version": "0.1.0",
-  "description": "",
+  "description": "Oasis's GraphQL API",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "concurrently -p \" {name} \" -c bgRed -n \"dev,tsc\" \"nodemon dist/start\" \"tsc --watch --preserveWatchOutput\"",
-    "watch:tsc": "tsc --watch --preserveWatchOutput"
+    "build": "tsc && node dist/globs/build.js",
+    "watch:tsc": "tsc --watch",
+    "watch:dev": "nodemon dist/start --ignore **/__globs.js",
+    "dev:server": "run-p \"watch:tsc\" \"watch:dev\"",
+    "dev": "yarn run watch:tsc"
   },
-  "keywords": [],
-  "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/graphql-depth-limit": "^1",
     "graphql": "^15.5.0",
     "nodemon": "^2.0.7",
-    "typescript": "^4.2.4"
+    "npm-run-all": "^4.1.5"
   },
   "dependencies": {
-    "@graphql-tools/load-files": "^6.3.2",
-    "@graphql-tools/merge": "^6.2.12",
+    "@graphql-tools/merge": "^6.2.13",
     "apollo-server-micro": "^2.23.0",
-    "concurrently": "^6.0.2",
+    "apollo-server-plugin-base": "^0.11.0",
+    "class-validator": "^0.13.1",
     "dotenv": "^8.2.0",
-    "firebase-admin": "^9.6.0"
+    "firebase-admin": "^9.7.0",
+    "graphql-depth-limit": "^1.1.0",
+    "graphql-query-complexity": "^0.8.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "typescript": "^4.2.4"
   }
 }

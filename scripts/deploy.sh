@@ -4,8 +4,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   # Git pull from staging
   git pull origin staging
-  
-  # Add all files 
+
+  # Add all files
   git add -A
 
   # Make a commit
@@ -21,5 +21,5 @@ then
   git push origin prod --force
 
   # Go back to staging
-  git checkout staging 
+  git checkout staging
 fi
